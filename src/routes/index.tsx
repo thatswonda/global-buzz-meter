@@ -10,6 +10,10 @@ import { Niches } from "@/components/av/Niches";
 import { Regions } from "@/components/av/Regions";
 import { LiveFeed } from "@/components/av/LiveFeed";
 import { Watchlist } from "@/components/av/Watchlist";
+import { Hashtags } from "@/components/av/Hashtags";
+import { TopCreators } from "@/components/av/TopCreators";
+import { AudiencePanel } from "@/components/av/AudiencePanel";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -47,11 +51,17 @@ function Index() {
               <TrendingProducts />
               <Breakouts />
             </div>
+            <Hashtags />
+            <AudiencePanel />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <Niches />
               <Regions />
             </div>
-            <LiveFeed />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <TopCreators />
+              <LiveFeed />
+            </div>
+
           </div>
 
           <Watchlist />
