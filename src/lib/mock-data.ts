@@ -177,3 +177,81 @@ export const featuredTopic = {
     "Attention around autonomous AI agents surged 184% in 30 days, led by US developer communities on YouTube and Google. Breakout terms include agentic workflows, multi-agent systems, and computer-use agents.",
   series: makeSpark(99, 90, 0.6),
 };
+
+// Trending hashtags across platforms
+export type Hashtag = {
+  tag: string;
+  platform: Platform;
+  posts: string;
+  reach: string;
+  growth: number;
+  sentiment: number; // 0-100, higher = more positive
+};
+
+export const hashtags: Hashtag[] = [
+  { tag: "#labubu", platform: "TikTok", posts: "2.8M", reach: "1.4B", growth: 412, sentiment: 88 },
+  { tag: "#agenticAI", platform: "Google", posts: "184K", reach: "92M", growth: 1240, sentiment: 76 },
+  { tag: "#sora2", platform: "YouTube", posts: "612K", reach: "340M", growth: 910, sentiment: 82 },
+  { tag: "#cortisolface", platform: "Instagram", posts: "418K", reach: "210M", growth: 412, sentiment: 54 },
+  { tag: "#pickleball", platform: "Google", posts: "1.7M", reach: "680M", growth: 122, sentiment: 91 },
+  { tag: "#matchatok", platform: "TikTok", posts: "920K", reach: "480M", growth: 184, sentiment: 86 },
+  { tag: "#reformerpilates", platform: "Instagram", posts: "1.2M", reach: "560M", growth: 156, sentiment: 84 },
+  { tag: "#kbeauty", platform: "Instagram", posts: "2.1M", reach: "1.1B", growth: 64, sentiment: 89 },
+  { tag: "#mobwife", platform: "TikTok", posts: "412K", reach: "180M", growth: 220, sentiment: 71 },
+  { tag: "#cybertruck", platform: "YouTube", posts: "289K", reach: "140M", growth: -38, sentiment: 42 },
+];
+
+// Top creators / influencers driving conversation
+export type Creator = {
+  handle: string;
+  platform: Platform;
+  followers: string;
+  engagement: number; // %
+  topic: string;
+  growth: number;
+};
+
+export const creators: Creator[] = [
+  { handle: "@mrbeast", platform: "YouTube", followers: "324M", engagement: 12.4, topic: "Creator Economy", growth: 8 },
+  { handle: "@khaby.lame", platform: "TikTok", followers: "162M", engagement: 9.8, topic: "Comedy", growth: 3 },
+  { handle: "@hubermanlab", platform: "Instagram", followers: "8.2M", engagement: 14.1, topic: "Wellness & Longevity", growth: 22 },
+  { handle: "@aiexplained", platform: "YouTube", followers: "1.4M", engagement: 18.6, topic: "Generative AI", growth: 41 },
+  { handle: "@matchamommy", platform: "TikTok", followers: "3.1M", engagement: 16.2, topic: "Food & Bev", growth: 28 },
+  { handle: "@pilatesbybree", platform: "Instagram", followers: "2.4M", engagement: 11.7, topic: "Fitness", growth: 19 },
+  { handle: "@labubucollector", platform: "TikTok", followers: "890K", engagement: 24.3, topic: "Collectibles", growth: 86 },
+];
+
+// Audience demographics for the featured topic
+export const demographics = {
+  age: [
+    { bucket: "13-17", pct: 8 },
+    { bucket: "18-24", pct: 28 },
+    { bucket: "25-34", pct: 34 },
+    { bucket: "35-44", pct: 18 },
+    { bucket: "45-54", pct: 8 },
+    { bucket: "55+", pct: 4 },
+  ],
+  gender: [
+    { label: "Female", pct: 54 },
+    { label: "Male", pct: 44 },
+    { label: "Other", pct: 2 },
+  ],
+  sentiment: { positive: 64, neutral: 24, negative: 12 },
+};
+
+// Content-format breakdown (where the attention is being captured)
+export type FormatSlice = {
+  format: string;
+  share: number; // percentage 0-100
+  growth: number;
+};
+
+export const formats: FormatSlice[] = [
+  { format: "Short-form video", share: 38, growth: 24 },
+  { format: "Long-form video", share: 22, growth: 8 },
+  { format: "Search queries", share: 18, growth: 12 },
+  { format: "Image posts", share: 12, growth: -4 },
+  { format: "Live streams", share: 6, growth: 31 },
+  { format: "Stories / reels", share: 4, growth: 18 },
+];
+
