@@ -8,6 +8,7 @@ import { Regions } from "@/components/av/Regions";
 import { LiveFeed } from "@/components/av/LiveFeed";
 import { Watchlist } from "@/components/av/Watchlist";
 import { AudiencePanel } from "@/components/av/AudiencePanel";
+import { FilterProvider } from "@/lib/filters";
 
 
 export const Route = createFileRoute("/")({
@@ -31,41 +32,43 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-surface">
-      <TopBar />
-      <MarketStrip />
-      <CategoryTabs />
+    <FilterProvider>
+      <div className="min-h-screen bg-surface">
+        <TopBar />
+        <MarketStrip />
+        <CategoryTabs />
 
-      <main className="mx-auto max-w-[1600px]">
-        <TopicCarousel />
+        <main className="mx-auto max-w-[1600px]">
+          <TopicCarousel />
 
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-4 px-4 lg:px-6 pb-8">
-          <div className="space-y-4 min-w-0">
-            <AttentionIndexTable />
-            <AudiencePanel />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <Regions />
-              <LiveFeed />
+          <div className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-4 px-4 lg:px-6 pb-8">
+            <div className="space-y-4 min-w-0">
+              <AttentionIndexTable />
+              <AudiencePanel />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <Regions />
+                <LiveFeed />
+              </div>
             </div>
+
+            <Watchlist />
           </div>
 
-          <Watchlist />
-        </div>
-
-        <footer className="border-t mt-8 px-4 lg:px-6 py-8 text-xs text-muted-foreground flex flex-wrap gap-4 justify-between">
-          <div className="flex items-center gap-2">
-            <span className="size-1.5 rounded-full bg-bull animate-pulse" />
-            Markets data updating in real time
-          </div>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-foreground">About</a>
-            <a href="#" className="hover:text-foreground">API</a>
-            <a href="#" className="hover:text-foreground">Methodology</a>
-            <a href="#" className="hover:text-foreground">Terms</a>
-          </div>
-          <div>© 2026 AttentionView</div>
-        </footer>
-      </main>
-    </div>
+          <footer className="border-t mt-8 px-4 lg:px-6 py-8 text-xs text-muted-foreground flex flex-wrap gap-4 justify-between">
+            <div className="flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-bull animate-pulse" />
+              Markets data updating in real time
+            </div>
+            <div className="flex gap-4">
+              <a href="#" className="hover:text-foreground">About</a>
+              <a href="#" className="hover:text-foreground">API</a>
+              <a href="#" className="hover:text-foreground">Methodology</a>
+              <a href="#" className="hover:text-foreground">Terms</a>
+            </div>
+            <div>© 2026 AttentionView</div>
+          </footer>
+        </main>
+      </div>
+    </FilterProvider>
   );
 }
