@@ -10,7 +10,7 @@ export function Watchlist() {
         <div className="flex items-center justify-between px-4 py-3 border-b">
           <button className="flex items-center gap-1.5 font-semibold text-sm">
             <Bookmark className="size-4 text-bear fill-bear" />
-            Trend list
+            Watch list
           </button>
           <div className="flex items-center gap-1 text-muted-foreground">
             <button className="size-7 grid place-items-center rounded hover:bg-muted"><Plus className="size-4" /></button>
