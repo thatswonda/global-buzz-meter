@@ -4,14 +4,9 @@ import { CategoryTabs } from "@/components/av/CategoryTabs";
 import { MarketStrip } from "@/components/av/MarketStrip";
 import { TopicCarousel } from "@/components/av/TopicCarousel";
 import { AttentionIndexTable } from "@/components/av/AttentionIndexTable";
-import { TrendingProducts } from "@/components/av/TrendingProducts";
-import { Breakouts } from "@/components/av/Breakouts";
-import { Niches } from "@/components/av/Niches";
 import { Regions } from "@/components/av/Regions";
 import { LiveFeed } from "@/components/av/LiveFeed";
 import { Watchlist } from "@/components/av/Watchlist";
-import { Hashtags } from "@/components/av/Hashtags";
-import { TopCreators } from "@/components/av/TopCreators";
 import { AudiencePanel } from "@/components/av/AudiencePanel";
 
 
@@ -47,21 +42,11 @@ function Index() {
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-4 px-4 lg:px-6 pb-8">
           <div className="space-y-4 min-w-0">
             <AttentionIndexTable />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <TrendingProducts />
-              <Breakouts />
-            </div>
-            <Hashtags />
             <AudiencePanel />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <Niches />
               <Regions />
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <TopCreators />
               <LiveFeed />
             </div>
-
           </div>
 
           <Watchlist />
