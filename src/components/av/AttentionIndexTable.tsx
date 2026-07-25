@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   topics,
   breakouts,
@@ -11,6 +11,7 @@ import { PlatformIcon } from "./PlatformIcon";
 import { Sparkline } from "./Sparkline";
 import { SignalBadge } from "./SignalBadge";
 import { ChevronRight, Zap, Hash, Users, TrendingUp, Search, Layers } from "lucide-react";
+import { useFilters } from "@/lib/filters";
 
 const tfs = ["1D", "1W", "1M", "3M", "1Y"];
 
@@ -43,8 +44,38 @@ const SUBTITLES: Record<TabKey, string> = {
   creators: "Voices driving the conversation",
 };
 
+const PLACEHOLDERS: Record<TabKey, string> = {
+  index: "Search symbols, topics, categories…",
+  keywords: "Search keywords…",
+  breakouts: "Search breakout keywords…",
+  products: "Search products…",
+  hashtags: "Search hashtags…",
+  niches: "Search niches…",
+  creators: "Search creators…",
+};
+
+function useFilteredTopics() {
+  const { region, niche } = useFilters();
+  return useMemo(
+    () =>
+      topics.filter(
+        (t) =>
+          (region === "Global" || t.region === region || t.region === "Global") &&
+          (niche === "All" || t.category === niche)
+      ),
+    [region, niche]
+  );
+}
+
 export function AttentionIndexTable() {
   const [tab, setTab] = useState<TabKey>("index");
+  const [query, setQuery] = useState("");
+
+  // reset query when switching tabs
+  const changeTab = (t: TabKey) => {
+    setTab(t);
+    setQuery("");
+  };
 
   return (
     <section className="rounded-2xl border bg-card">
@@ -76,7 +107,7 @@ export function AttentionIndexTable() {
             return (
               <button
                 key={t.key}
-                onClick={() => setTab(t.key)}
+                onClick={() => changeTab(t.key)}
                 className={`inline-flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
                   active
                     ? "bg-foreground text-background border-foreground"
@@ -89,20 +120,43 @@ export function AttentionIndexTable() {
             );
           })}
         </div>
+
+        <div className="mt-3 relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={PLACEHOLDERS[tab]}
+            className="w-full h-9 rounded-full bg-muted pl-9 pr-3 text-sm outline-none focus:ring-2 focus:ring-ring"
+          />
+        </div>
       </div>
 
-      {tab === "index" && <IndexTable />}
-      {tab === "keywords" && <KeywordsTable />}
-      {tab === "breakouts" && <BreakoutsList />}
-      {tab === "products" && <ProductsList />}
-      {tab === "hashtags" && <HashtagsTable />}
-      {tab === "niches" && <NichesList />}
-      {tab === "creators" && <CreatorsList />}
+      {tab === "index" && <IndexTable query={query} />}
+      {tab === "keywords" && <KeywordsTable query={query} />}
+      {tab === "breakouts" && <BreakoutsList query={query} />}
+      {tab === "products" && <ProductsList query={query} />}
+      {tab === "hashtags" && <HashtagsTable query={query} />}
+      {tab === "niches" && <NichesList query={query} />}
+      {tab === "creators" && <CreatorsList query={query} />}
     </section>
   );
 }
 
-function IndexTable() {
+function Empty({ label }: { label: string }) {
+  return <div className="p-8 text-center text-sm text-muted-foreground">No {label} match your filters.</div>;
+}
+
+function matches(q: string, ...fields: (string | undefined)[]) {
+  if (!q) return true;
+  const needle = q.toLowerCase();
+  return fields.some((f) => f?.toLowerCase().includes(needle));
+}
+
+function IndexTable({ query }: { query: string }) {
+  const filteredTopics = useFilteredTopics();
+  const rows = filteredTopics.filter((t) => matches(query, t.symbol, t.name, t.category, t.platform));
+  if (!rows.length) return <Empty label="topics" />;
   return (
     <div className="overflow-x-auto scrollbar-thin">
       <table className="w-full text-sm">
@@ -119,7 +173,7 @@ function IndexTable() {
           </tr>
         </thead>
         <tbody>
-          {topics.map((t) => {
+          {rows.map((t) => {
             const pos = t.change >= 0;
             return (
               <tr key={t.symbol} className="border-b last:border-0 hover:bg-muted/50 cursor-pointer group">
@@ -165,8 +219,12 @@ function IndexTable() {
   );
 }
 
-function KeywordsTable() {
-  const keywords = [...topics].sort((a, b) => b.index - a.index);
+function KeywordsTable({ query }: { query: string }) {
+  const filteredTopics = useFilteredTopics();
+  const keywords = [...filteredTopics]
+    .sort((a, b) => b.index - a.index)
+    .filter((t) => matches(query, t.symbol, t.name, t.category, t.platform, t.region));
+  if (!keywords.length) return <Empty label="keywords" />;
   return (
     <div className="overflow-x-auto scrollbar-thin">
       <table className="w-full text-sm">
@@ -212,10 +270,12 @@ function KeywordsTable() {
   );
 }
 
-function BreakoutsList() {
+function BreakoutsList({ query }: { query: string }) {
+  const rows = breakouts.filter((b) => matches(query, b.keyword, b.platform));
+  if (!rows.length) return <Empty label="breakouts" />;
   return (
     <ul className="divide-y">
-      {breakouts.map((b, i) => (
+      {rows.map((b, i) => (
         <li key={b.keyword} className="flex items-center gap-3 px-4 lg:px-5 py-3.5 hover:bg-muted/50 cursor-pointer">
           <div className="text-xs font-mono text-muted-foreground w-6">{String(i + 1).padStart(2, "0")}</div>
           <PlatformIcon platform={b.platform} size={28} />
@@ -233,10 +293,17 @@ function BreakoutsList() {
   );
 }
 
-function ProductsList() {
+function ProductsList({ query }: { query: string }) {
+  const { niche } = useFilters();
+  const rows = trendingProducts.filter(
+    (p) =>
+      (niche === "All" || p.category === niche) &&
+      matches(query, p.name, p.category, p.platform)
+  );
+  if (!rows.length) return <Empty label="products" />;
   return (
     <ul className="divide-y">
-      {trendingProducts.map((p) => (
+      {rows.map((p) => (
         <li key={p.name} className="flex items-center gap-3 px-4 lg:px-5 py-3.5 hover:bg-muted/50 cursor-pointer">
           <PlatformIcon platform={p.platform} size={32} />
           <div className="min-w-0 flex-1">
@@ -256,7 +323,9 @@ function ProductsList() {
   );
 }
 
-function HashtagsTable() {
+function HashtagsTable({ query }: { query: string }) {
+  const rows = hashtags.filter((h) => matches(query, h.tag, h.platform));
+  if (!rows.length) return <Empty label="hashtags" />;
   return (
     <div className="overflow-x-auto scrollbar-thin">
       <table className="w-full text-sm">
@@ -270,7 +339,7 @@ function HashtagsTable() {
           </tr>
         </thead>
         <tbody>
-          {hashtags.map((h) => {
+          {rows.map((h) => {
             const pos = h.growth >= 0;
             const sentColor =
               h.sentiment >= 75 ? "bg-bull" : h.sentiment >= 55 ? "bg-warn" : "bg-bear";
@@ -304,10 +373,15 @@ function HashtagsTable() {
   );
 }
 
-function NichesList() {
+function NichesList({ query }: { query: string }) {
+  const { niche } = useFilters();
+  const rows = niches.filter(
+    (n) => (niche === "All" || n.name.toLowerCase().includes(niche.toLowerCase())) && matches(query, n.name)
+  );
+  if (!rows.length) return <Empty label="niches" />;
   return (
     <ul className="divide-y">
-      {niches.map((n, i) => {
+      {rows.map((n, i) => {
         const pos = n.growth >= 0;
         return (
           <li key={n.name} className="flex items-center gap-4 px-4 lg:px-5 py-3.5 hover:bg-muted/50 cursor-pointer">
@@ -327,10 +401,17 @@ function NichesList() {
   );
 }
 
-function CreatorsList() {
+function CreatorsList({ query }: { query: string }) {
+  const { niche } = useFilters();
+  const rows = creators.filter(
+    (c) =>
+      (niche === "All" || c.topic.toLowerCase().includes(niche.toLowerCase())) &&
+      matches(query, c.handle, c.platform, c.topic)
+  );
+  if (!rows.length) return <Empty label="creators" />;
   return (
     <ul className="divide-y">
-      {creators.map((c, i) => (
+      {rows.map((c, i) => (
         <li key={c.handle} className="flex items-center gap-3 px-4 lg:px-5 py-3.5 hover:bg-muted/50 cursor-pointer">
           <div className="text-xs font-mono text-muted-foreground w-5">{i + 1}</div>
           <PlatformIcon platform={c.platform} size={30} />
