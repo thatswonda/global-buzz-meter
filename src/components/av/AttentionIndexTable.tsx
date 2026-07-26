@@ -316,10 +316,14 @@ function ProductsList({ query }: { query: string }) {
           <div className="min-w-0 flex-1">
             <div className="font-semibold truncate">{p.name}</div>
             <div className="text-xs text-muted-foreground">
-              {p.category} · {p.price} · {p.searches} searches
+              {p.category} · {p.price}
             </div>
           </div>
           <Sparkline data={p.spark} width={70} height={28} />
+          <div className="text-right shrink-0 w-20 hidden sm:block">
+            <div className="text-sm font-semibold num">{p.searches}</div>
+            <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Search vol</div>
+          </div>
           <div className="text-right shrink-0 w-20">
             <div className="text-sm font-bold text-bull num">+{p.growth}%</div>
             <div className="text-[10px] text-muted-foreground uppercase tracking-wider">30d</div>
@@ -329,6 +333,7 @@ function ProductsList({ query }: { query: string }) {
     </ul>
   );
 }
+
 
 function HashtagsTable({ query }: { query: string }) {
   const rows = hashtags.filter((h) => matches(query, h.tag, h.platform));
