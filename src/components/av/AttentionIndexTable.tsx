@@ -85,20 +85,19 @@ export function AttentionIndexTable() {
             <h2 className="font-display text-2xl font-bold">Attention Index ranking</h2>
             <p className="text-xs text-muted-foreground mt-0.5">{SUBTITLES[tab]}</p>
           </div>
-          {tab === "index" && (
-            <div className="hidden sm:flex items-center gap-1 rounded-full bg-muted p-1">
-              {tfs.map((t, i) => (
-                <button
-                  key={t}
-                  className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                    i === 2 ? "bg-background shadow-sm" : "text-muted-foreground"
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="hidden sm:flex items-center gap-1 rounded-full bg-muted p-1">
+            {tfs.map((t, i) => (
+              <button
+                key={t}
+                className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                  i === 2 ? "bg-background shadow-sm" : "text-muted-foreground"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+
         </div>
         <div className="mt-4 flex items-center gap-1.5 overflow-x-auto scrollbar-thin -mx-1 px-1">
           {TABS.map((t) => {
