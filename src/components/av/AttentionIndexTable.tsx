@@ -443,10 +443,15 @@ function CreatorsList({ query }: { query: string }) {
               {c.followers} followers · {c.topic}
             </div>
           </div>
+          <div className="text-right shrink-0 hidden sm:block">
+            <div className="text-sm font-semibold num">{c.followers}</div>
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Search vol</div>
+          </div>
           <div className="text-right shrink-0">
             <div className="text-sm font-bold num">{c.engagement}%</div>
             <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Engage</div>
           </div>
+
           <div className={`text-sm font-bold num w-12 text-right ${c.growth >= 0 ? "text-bull" : "text-bear"}`}>
             {c.growth >= 0 ? "+" : ""}{c.growth}%
           </div>
