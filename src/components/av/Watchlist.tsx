@@ -1,10 +1,20 @@
+import { useState } from "react";
 import { watchlist, featuredTopic } from "@/lib/mock-data";
-import { Plus, Grid3x3, MoreHorizontal, Bookmark } from "lucide-react";
+import { Plus, Grid3x3, MoreHorizontal, Bookmark, Sparkles, Send } from "lucide-react";
 import { AreaChart } from "./AreaChart";
 
+const SUGGESTIONS = [
+  "Which niches are breaking out this week?",
+  "Compare AI.AGENTS vs SORA.AI",
+  "Best products to launch in APAC",
+];
+
 export function Watchlist() {
+  const [msg, setMsg] = useState("");
   return (
-    <aside className="space-y-4">
+    <aside className="relative xl:sticky xl:top-4 xl:h-[calc(100vh-2rem)] flex flex-col gap-4">
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin space-y-4 pb-2 pr-1 -mr-1">
+
       {/* Watchlist */}
       <div className="rounded-2xl border bg-card overflow-hidden">
         <div className="flex items-center justify-between px-4 py-3 border-b">
