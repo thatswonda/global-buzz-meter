@@ -367,6 +367,8 @@ function HashtagsTable({ query }: { query: string }) {
                 </td>
                 <td className="py-3 text-right num text-muted-foreground hidden sm:table-cell">{h.posts}</td>
                 <td className="py-3 text-right num text-muted-foreground hidden md:table-cell">{h.reach}</td>
+                <td className="py-3 text-right num text-muted-foreground hidden lg:table-cell">{h.posts}</td>
+
                 <td className="py-3 pl-6">
                   <div className="flex items-center gap-2">
                     <div className="h-1.5 w-20 rounded-full bg-muted overflow-hidden">
