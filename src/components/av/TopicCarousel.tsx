@@ -115,7 +115,7 @@ export function TopicCarousel() {
           View all <ChevronRight className="size-3" />
         </a>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(320px,40%)] gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-3 items-start">
         <div className="grid grid-flow-col auto-cols-[minmax(240px,1fr)] gap-3 overflow-x-auto scrollbar-thin pb-2 -mx-1 px-1">
           {featured.map((t, i) => {
             const pos = t.change >= 0;
