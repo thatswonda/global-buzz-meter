@@ -274,23 +274,31 @@ function BreakoutsList({ query }: { query: string }) {
   if (!rows.length) return <Empty label="breakouts" />;
   return (
     <ul className="divide-y">
-      {rows.map((b, i) => (
-        <li key={b.keyword} className="flex items-center gap-3 px-4 lg:px-5 py-3.5 hover:bg-muted/50 cursor-pointer">
-          <div className="text-xs font-mono text-muted-foreground w-6">{String(i + 1).padStart(2, "0")}</div>
-          <PlatformIcon platform={b.platform} size={28} />
-          <div className="min-w-0 flex-1">
-            <div className="font-semibold text-sm truncate">{b.keyword}</div>
-            <div className="text-[11px] text-muted-foreground">{b.platform} · emerged {b.age} ago</div>
-          </div>
-          <div className="text-right">
-            <div className="text-sm font-bold text-bull num">{b.growth}</div>
-            <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Score {b.score}</div>
-          </div>
-        </li>
-      ))}
+      {rows.map((b, i) => {
+        const vol = `${(b.score * 3.2).toFixed(0)}K`;
+        return (
+          <li key={b.keyword} className="flex items-center gap-3 px-4 lg:px-5 py-3.5 hover:bg-muted/50 cursor-pointer">
+            <div className="text-xs font-mono text-muted-foreground w-6">{String(i + 1).padStart(2, "0")}</div>
+            <PlatformIcon platform={b.platform} size={28} />
+            <div className="min-w-0 flex-1">
+              <div className="font-semibold text-sm truncate">{b.keyword}</div>
+              <div className="text-[11px] text-muted-foreground">{b.platform} · emerged {b.age} ago</div>
+            </div>
+            <div className="text-right shrink-0 w-20 hidden sm:block">
+              <div className="text-sm font-semibold num">{vol}</div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Volume</div>
+            </div>
+            <div className="text-right">
+              <div className="text-sm font-bold text-bull num">{b.growth}</div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Score {b.score}</div>
+            </div>
+          </li>
+        );
+      })}
     </ul>
   );
 }
+
 
 function ProductsList({ query }: { query: string }) {
   const { niche } = useFilters();
