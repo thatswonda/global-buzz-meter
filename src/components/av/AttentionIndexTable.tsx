@@ -346,8 +346,10 @@ function HashtagsTable({ query }: { query: string }) {
             <th className="text-left font-medium px-4 lg:px-5 py-3">Hashtag</th>
             <th className="text-right font-medium py-3 hidden sm:table-cell">Posts</th>
             <th className="text-right font-medium py-3 hidden md:table-cell">Reach</th>
+            <th className="text-right font-medium py-3 hidden lg:table-cell">Search Vol</th>
             <th className="text-left font-medium py-3 pl-6">Sentiment</th>
             <th className="text-right font-medium py-3 pr-4 lg:pr-5">30d</th>
+
           </tr>
         </thead>
         <tbody>
