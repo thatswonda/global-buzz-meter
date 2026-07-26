@@ -399,6 +399,7 @@ function NichesList({ query }: { query: string }) {
     <ul className="divide-y">
       {rows.map((n, i) => {
         const pos = n.growth >= 0;
+        const vol = `${(n.topics * 12.4).toFixed(0)}K`;
         return (
           <li key={n.name} className="flex items-center gap-4 px-4 lg:px-5 py-3.5 hover:bg-muted/50 cursor-pointer">
             <div className="text-xs font-mono text-muted-foreground w-5">{i + 1}</div>
@@ -407,12 +408,17 @@ function NichesList({ query }: { query: string }) {
               <div className="text-xs text-muted-foreground">{n.topics} topics · {n.share}% share</div>
             </div>
             <Sparkline data={n.spark} width={80} height={28} />
+            <div className="text-right shrink-0 w-20 hidden sm:block">
+              <div className="text-sm font-semibold num">{vol}</div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Search vol</div>
+            </div>
             <div className={`text-sm font-bold num w-16 text-right ${pos ? "text-bull" : "text-bear"}`}>
               {pos ? "+" : ""}{n.growth}%
             </div>
           </li>
         );
       })}
+
     </ul>
   );
 }
