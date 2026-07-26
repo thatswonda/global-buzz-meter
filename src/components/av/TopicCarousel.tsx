@@ -73,7 +73,7 @@ function AdsReel() {
   // Duplicate for seamless loop
   const loop = [...ADS, ...ADS];
   return (
-    <div className="rounded-2xl border bg-card/50 p-2 overflow-hidden">
+    <div className="rounded-2xl border bg-card/50 p-2 overflow-hidden self-start">
       <div className="flex items-center justify-between px-2 pb-2">
         <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground">
           Sponsored
@@ -91,8 +91,8 @@ function AdsReel() {
       </div>
       <div className="overflow-hidden">
         <div
-          className="grid grid-flow-col auto-cols-[calc(50%-6px)] gap-3 transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(calc(-${offset} * (50% + 6px)))` }}
+          className="grid grid-flow-col auto-cols-[75%] gap-2 transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(calc(-${offset} * (75% + 8px)))` }}
         >
           {loop.map((ad, i) => (
             <AdSlot key={i} ad={ad} />
