@@ -109,9 +109,15 @@ export function TopicCarousel() {
         <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
           Community trends
         </h2>
+        <a
+          href="#"
+          className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
+        >
+          View all <ChevronRight className="size-3" />
+        </a>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,32%)] gap-3 items-start">
-        <div className="grid grid-flow-col auto-cols-[minmax(200px,1fr)] gap-3 overflow-x-auto scrollbar-thin pb-1 -mx-1 px-1">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(220px,26%)] gap-3 items-start">
+        <div className="grid grid-flow-col auto-cols-[minmax(260px,1fr)] gap-3 overflow-x-auto scrollbar-thin pb-1 -mx-1 px-1">
           {featured.map((t, i) => {
             const pos = t.change >= 0;
             return (
@@ -145,14 +151,7 @@ export function TopicCarousel() {
             );
           })}
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-end">
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-              View all <ChevronRight className="size-3" />
-            </a>
-          </div>
-          <AdsReel />
-        </div>
+        <AdsReel />
       </div>
     </section>
   );
