@@ -45,20 +45,19 @@ const ADS = [
 function AdSlot({ ad }: { ad: (typeof ADS)[number] }) {
   return (
     <div
-      className={`relative rounded-2xl border p-4 h-full bg-gradient-to-br ${ad.accent} cursor-pointer hover:border-foreground/25 transition overflow-hidden`}
+      className={`relative rounded-xl border p-2.5 h-full bg-gradient-to-br ${ad.accent} cursor-pointer hover:border-foreground/25 transition overflow-hidden`}
     >
-      <div className="flex items-center justify-between mb-3">
-        <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold text-muted-foreground bg-background/80 backdrop-blur px-2 py-0.5 rounded-full">
-          <Megaphone className="size-3" /> {ad.tag}
+      <div className="flex items-center gap-1.5 mb-1">
+        <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider font-semibold text-muted-foreground bg-background/80 backdrop-blur px-1.5 py-0.5 rounded-full">
+          <Megaphone className="size-2.5" /> {ad.tag}
         </span>
-        <ExternalLink className="size-3.5 text-muted-foreground" />
+        <span className="text-[10px] font-semibold text-muted-foreground truncate">{ad.brand}</span>
       </div>
-      <div className="text-xs font-semibold text-muted-foreground mb-1">{ad.brand}</div>
-      <div className="font-display font-bold text-base leading-snug mb-4 line-clamp-2">
+      <div className="font-display font-bold text-xs leading-snug line-clamp-2 mb-1.5">
         {ad.title}
       </div>
-      <button className="text-xs font-semibold px-3 py-1.5 rounded-full bg-foreground text-background hover:opacity-90">
-        {ad.cta}
+      <button className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-foreground text-background hover:opacity-90 inline-flex items-center gap-1">
+        {ad.cta} <ExternalLink className="size-2.5" />
       </button>
     </div>
   );
