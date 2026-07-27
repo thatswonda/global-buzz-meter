@@ -45,20 +45,19 @@ const ADS = [
 function AdSlot({ ad }: { ad: (typeof ADS)[number] }) {
   return (
     <div
-      className={`relative rounded-2xl border p-4 h-full bg-gradient-to-br ${ad.accent} cursor-pointer hover:border-foreground/25 transition overflow-hidden`}
+      className={`relative rounded-xl border p-2.5 h-full bg-gradient-to-br ${ad.accent} cursor-pointer hover:border-foreground/25 transition overflow-hidden`}
     >
-      <div className="flex items-center justify-between mb-3">
-        <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold text-muted-foreground bg-background/80 backdrop-blur px-2 py-0.5 rounded-full">
-          <Megaphone className="size-3" /> {ad.tag}
+      <div className="flex items-center gap-1.5 mb-1">
+        <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider font-semibold text-muted-foreground bg-background/80 backdrop-blur px-1.5 py-0.5 rounded-full">
+          <Megaphone className="size-2.5" /> {ad.tag}
         </span>
-        <ExternalLink className="size-3.5 text-muted-foreground" />
+        <span className="text-[10px] font-semibold text-muted-foreground truncate">{ad.brand}</span>
       </div>
-      <div className="text-xs font-semibold text-muted-foreground mb-1">{ad.brand}</div>
-      <div className="font-display font-bold text-base leading-snug mb-4 line-clamp-2">
+      <div className="font-display font-bold text-xs leading-snug line-clamp-2 mb-1.5">
         {ad.title}
       </div>
-      <button className="text-xs font-semibold px-3 py-1.5 rounded-full bg-foreground text-background hover:opacity-90">
-        {ad.cta}
+      <button className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-foreground text-background hover:opacity-90 inline-flex items-center gap-1">
+        {ad.cta} <ExternalLink className="size-2.5" />
       </button>
     </div>
   );
@@ -70,12 +69,11 @@ function AdsReel() {
     const id = setInterval(() => setOffset((o) => (o + 1) % ADS.length), 3500);
     return () => clearInterval(id);
   }, []);
-  // Duplicate for seamless loop
   const loop = [...ADS, ...ADS];
   return (
-    <div className="rounded-2xl border bg-card/50 p-2 overflow-hidden self-start">
-      <div className="flex items-center justify-between px-2 pb-2">
-        <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground">
+    <div className="rounded-xl border bg-card/50 p-1.5 overflow-hidden">
+      <div className="flex items-center justify-between px-1.5 pb-1">
+        <span className="text-[9px] uppercase tracking-wider font-semibold text-muted-foreground">
           Sponsored
         </span>
         <div className="flex gap-1">
@@ -91,8 +89,8 @@ function AdsReel() {
       </div>
       <div className="overflow-hidden">
         <div
-          className="grid grid-flow-col auto-cols-[75%] gap-2 transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(calc(-${offset} * (75% + 8px)))` }}
+          className="grid grid-flow-col auto-cols-[minmax(180px,1fr)] gap-2 transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(calc(-${offset} * (100% + 8px)))` }}
         >
           {loop.map((ad, i) => (
             <AdSlot key={i} ad={ad} />
@@ -106,17 +104,14 @@ function AdsReel() {
 export function TopicCarousel() {
   const featured = topics.slice(0, 5);
   return (
-    <section className="px-4 lg:px-6 py-4">
-      <div className="flex items-center justify-between mb-3">
+    <section className="px-4 lg:px-6 pt-3 pb-1">
+      <div className="flex items-center justify-between mb-2">
         <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
           Community trends
         </h2>
-        <a href="#" className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-          View all <ChevronRight className="size-3" />
-        </a>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-3 items-start">
-        <div className="grid grid-flow-col auto-cols-[minmax(240px,1fr)] gap-3 overflow-x-auto scrollbar-thin pb-2 -mx-1 px-1">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,32%)] gap-3 items-start">
+        <div className="grid grid-flow-col auto-cols-[minmax(200px,1fr)] gap-3 overflow-x-auto scrollbar-thin pb-1 -mx-1 px-1">
           {featured.map((t, i) => {
             const pos = t.change >= 0;
             return (
@@ -150,7 +145,14 @@ export function TopicCarousel() {
             );
           })}
         </div>
-        <AdsReel />
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-end">
+            <a href="#" className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+              View all <ChevronRight className="size-3" />
+            </a>
+          </div>
+          <AdsReel />
+        </div>
       </div>
     </section>
   );

@@ -91,7 +91,7 @@ export function Watchlist() {
       </div>
 
       {/* AI analyst chat — floating, layered on top of watchlist */}
-      <div className="absolute bottom-0 left-0 right-0 rounded-2xl border bg-card/95 backdrop-blur-md shadow-2xl overflow-hidden">
+      <div className="fixed bottom-3 left-3 right-3 z-40 xl:absolute xl:bottom-2 xl:left-2 xl:right-2 rounded-2xl border bg-card/95 backdrop-blur-md shadow-2xl overflow-hidden">
         <div className="flex items-center gap-2 px-3 py-2 border-b bg-gradient-to-r from-primary/10 via-transparent to-info/10">
           <div className="size-6 rounded-full bg-foreground text-background grid place-items-center">
             <Sparkles className="size-3.5" />
